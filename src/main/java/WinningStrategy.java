@@ -58,7 +58,7 @@ class WinningStrategy {
         return Square.State.EMPTY;
     }
 
-    public boolean isDrawn() {
+    public boolean isDraw() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board.getSquare(i, j).getState() == Square.State.EMPTY) {

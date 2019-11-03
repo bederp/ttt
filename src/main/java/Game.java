@@ -22,12 +22,12 @@ class Game {
         return winner.getReadOnlyProperty();
     }
 
-    private ReadOnlyBooleanWrapper drawn = new ReadOnlyBooleanWrapper(false);
-    public ReadOnlyBooleanProperty drawnProperty() {
-        return drawn.getReadOnlyProperty();
+    private ReadOnlyBooleanWrapper draw = new ReadOnlyBooleanWrapper(false);
+    public ReadOnlyBooleanProperty drawProperty() {
+        return draw.getReadOnlyProperty();
     }
-    public boolean isDrawn() {
-        return drawn.get();
+    public boolean getDraw() {
+        return draw.get();
     }
 
     private ReadOnlyBooleanWrapper gameOver = new ReadOnlyBooleanWrapper(false);
@@ -41,7 +41,7 @@ class Game {
     public Game(GameManager gameManager) {
         gameOver.bind(
                 winnerProperty().isNotEqualTo(Square.State.EMPTY)
-                        .or(drawnProperty())
+                        .or(drawProperty())
         );
 
         skin = new GameSkin(gameManager, this);
@@ -63,9 +63,9 @@ class Game {
 
     private void checkForWinner() {
         winner.set(winningStrategy.getWinner());
-        drawn.set(winningStrategy.isDrawn());
+        draw.set(winningStrategy.isDraw());
 
-        if (isDrawn()) {
+        if (getDraw()) {
             currentPlayer.set(Square.State.EMPTY);
         }
     }

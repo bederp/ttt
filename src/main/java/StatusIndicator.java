@@ -22,20 +22,6 @@ class StatusIndicator extends HBox {
     }
 
     private void bindIndicatorFieldsToGame(Game game) {
-        playerToken.imageProperty().bind(
-                Bindings.when(
-                        game.currentPlayerProperty().isEqualTo(Square.State.NOUGHT)
-                )
-                        .then(SquareSkin.noughtImage)
-                        .otherwise(
-                                Bindings.when(
-                                        game.currentPlayerProperty().isEqualTo(Square.State.CROSS)
-                                )
-                                        .then(SquareSkin.crossImage)
-                                        .otherwise((Image) null)
-                        )
-        );
-
         playerLabel.textProperty().bind(
                 Bindings.when(
                         game.gameOverProperty().not()
@@ -49,5 +35,17 @@ class StatusIndicator extends HBox {
                                         .otherwise("Winning Player: ")
                         )
         );
+    }
+
+    void playerToken(Square.State state) {
+        switch (state) {
+            case NOUGHT:
+                playerToken.setImage(SquareSkin.noughtImage);
+                break;
+            case CROSS:
+                playerToken.setImage(SquareSkin.crossImage);
+            default:
+                playerToken.setImage(null);
+        }
     }
 }

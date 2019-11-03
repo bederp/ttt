@@ -9,31 +9,34 @@ class Game {
     private Board board = new Board(this);
     private WinningStrategy winningStrategy = new WinningStrategy(board);
 
-    private ReadOnlyObjectWrapper<Square.State> currentPlayer = new ReadOnlyObjectWrapper<>(Square.State.CROSS);
-    public ReadOnlyObjectProperty<Square.State> currentPlayerProperty() {
-        return currentPlayer.getReadOnlyProperty();
-    }
-    public Square.State getCurrentPlayer() {
-        return currentPlayer.get();
-    }
+    private Square.State currentPlayer = Square.State.CROSS;
 
     private ReadOnlyObjectWrapper<Square.State> winner = new ReadOnlyObjectWrapper<>(Square.State.EMPTY);
+
     public ReadOnlyObjectProperty<Square.State> winnerProperty() {
         return winner.getReadOnlyProperty();
     }
 
     private ReadOnlyBooleanWrapper draw = new ReadOnlyBooleanWrapper(false);
+
+    public Square.State getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public ReadOnlyBooleanProperty drawProperty() {
         return draw.getReadOnlyProperty();
     }
+
     public boolean getDraw() {
         return draw.get();
     }
 
     private ReadOnlyBooleanWrapper gameOver = new ReadOnlyBooleanWrapper(false);
+
     public ReadOnlyBooleanProperty gameOverProperty() {
         return gameOver.getReadOnlyProperty();
     }
+
     public boolean isGameOver() {
         return gameOver.get();
     }
@@ -54,10 +57,14 @@ class Game {
     public void nextTurn() {
         if (isGameOver()) return;
 
-        switch (currentPlayer.get()) {
+        switch (currentPlayer) {
             case EMPTY:
-            case NOUGHT: currentPlayer.set(Square.State.CROSS);  break;
-            case CROSS:  currentPlayer.set(Square.State.NOUGHT); break;
+            case NOUGHT:
+                currentPlayer = Square.State.CROSS;
+                break;
+            case CROSS:
+                currentPlayer = Square.State.NOUGHT;
+                break;
         }
     }
 
@@ -66,7 +73,7 @@ class Game {
         draw.set(winningStrategy.isDraw());
 
         if (getDraw()) {
-            currentPlayer.set(Square.State.EMPTY);
+            currentPlayer = Square.State.EMPTY;
         }
     }
 

@@ -7,12 +7,15 @@ class Square {
 
     private final SquareSkin skin;
 
-    private ReadOnlyObjectWrapper<State> state = new ReadOnlyObjectWrapper<>(State.EMPTY);
-    public ReadOnlyObjectProperty<State> stateProperty() {
-        return state.getReadOnlyProperty();
-    }
+    private State state = State.EMPTY;
+
     public State getState() {
-        return state.get();
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+        skin.setState(state);
     }
 
     private final Game game;
@@ -24,8 +27,8 @@ class Square {
     }
 
     public void pressed() {
-        if (!game.isGameOver() && state.get() == State.EMPTY) {
-            state.set(game.getCurrentPlayer());
+        if (!game.isGameOver() && state == State.EMPTY) {
+            setState(game.getCurrentPlayer());
             game.boardUpdated();
             game.nextTurn();
         }

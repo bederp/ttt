@@ -1,6 +1,4 @@
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
@@ -11,30 +9,22 @@ class StatusIndicator extends HBox {
     StatusIndicator(Game game) {
         getStyleClass().add("status-indicator");
 
-        bindIndicatorFieldsToGame(game);
-
         playerToken.setFitHeight(32);
         playerToken.setPreserveRatio(true);
-
         playerLabel.getStyleClass().add("info");
+        playerToken.setImage(SquareSkin.crossImage);
 
         getChildren().addAll(playerLabel, playerToken);
     }
 
-    private void bindIndicatorFieldsToGame(Game game) {
-        playerLabel.textProperty().bind(
-                Bindings.when(
-                        game.gameOverProperty().not()
-                )
-                        .then("Current Player: ")
-                        .otherwise(
-                                Bindings.when(
-                                        game.winnerProperty().isEqualTo(Square.State.EMPTY)
-                                )
-                                        .then("Draw")
-                                        .otherwise("Winning Player: ")
-                        )
-        );
+    void playerLabel(WinningStrategy.GameStatus gameStatus) {
+        if (WinningStrategy.GameStatus.DRAW == gameStatus) {
+            playerLabel.setText("Draw");
+        } else if (WinningStrategy.GameStatus.IN_PROGRESS == gameStatus) {
+            playerLabel.setText("Current Player: ");
+        } else {
+            playerLabel.setText("Winning Player: ");
+        }
     }
 
     void playerToken(Square.State state) {

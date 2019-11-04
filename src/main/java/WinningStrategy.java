@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class WinningStrategy {
+    enum GameStatus {NOUGHT_WON, CROSS_WON, DRAW, IN_PROGRESS}
     private final Board board;
 
     private static final int NOUGHT_WON = 3;
@@ -18,7 +19,7 @@ class WinningStrategy {
         this.board = board;
     }
 
-    public Square.State getWinner() {
+    public GameStatus getWinner() {
         for (int i = 0; i < 3; i++) {
             int score = 0;
             for (int j = 0; j < 3; j++) {
@@ -55,10 +56,10 @@ class WinningStrategy {
             return winner(score);
         }
 
-        return Square.State.EMPTY;
+        return allFieldsAreOccupied() ? GameStatus.DRAW : GameStatus.IN_PROGRESS;
     }
 
-    public boolean isDraw() {
+    public boolean allFieldsAreOccupied() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board.getSquare(i, j).getState() == Square.State.EMPTY) {
@@ -66,8 +67,7 @@ class WinningStrategy {
                 }
             }
         }
-
-        return getWinner() == Square.State.EMPTY;
+        return true;
     }
 
     private Integer valueOf(int i, int j) {
@@ -78,10 +78,10 @@ class WinningStrategy {
         return score == NOUGHT_WON || score == CROSS_WON;
     }
 
-    private Square.State winner(int score) {
-        if (score == NOUGHT_WON) return Square.State.NOUGHT;
-        if (score == CROSS_WON)  return Square.State.CROSS;
+    private GameStatus winner(int score) {
+        if (score == NOUGHT_WON) return GameStatus.NOUGHT_WON;
+        if (score == CROSS_WON)  return GameStatus.CROSS_WON;
 
-        return Square.State.EMPTY;
+        return GameStatus.DRAW;
     }
 }

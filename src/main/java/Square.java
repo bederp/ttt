@@ -1,5 +1,3 @@
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.Node;
 
 class Square {
@@ -29,8 +27,7 @@ class Square {
     public void pressed() {
         if (!game.isGameOver() && state == State.EMPTY) {
             setState(game.getCurrentPlayer());
-            game.boardUpdated();
-            game.nextTurn();
+            game.updateState();
         }
     }
 

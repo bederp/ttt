@@ -34,6 +34,7 @@ class StatusIndicator extends HBox {
                 break;
             case CROSS:
                 playerToken.setImage(SquareSkin.crossImage);
+                break;
             default:
                 playerToken.setImage(null);
         }

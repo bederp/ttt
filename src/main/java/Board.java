@@ -8,7 +8,7 @@ class Board {
     public Board(Game game) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                squares[i][j] = new Square(game);
+                squares[i][j] = new Square(game, i ,j);
             }
         }
 

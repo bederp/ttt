@@ -38,6 +38,14 @@ class Game {
         setNextPlayer();
     }
 
+
+    public void updateState(int x, int y, String z) {
+        board.getSquare(x,y).pressed(z);
+        checkForWinner();
+        setNextPlayer();
+    }
+
+
     public void setNextPlayer() {
         if (gameOver) return;
 

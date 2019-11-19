@@ -3,6 +3,7 @@ import javafx.scene.Parent;
 class Game {
     private GameSkin skin;
     private PlayAgainChoice playAgainChoice;
+    private GameManager gameManager;
     private StatusIndicator statusIndicator;
     private Board board = new Board(this);
     private WinningStrategy winningStrategy = new WinningStrategy(board);
@@ -12,6 +13,7 @@ class Game {
 
     public Game(GameManager gameManager) {
         this.playAgainChoice = new PlayAgainChoice(gameManager, this);
+        this.gameManager = gameManager;
         this.statusIndicator = new StatusIndicator(this);
         this.skin = new GameSkin(this, playAgainChoice, statusIndicator);
     }
@@ -33,14 +35,15 @@ class Game {
         return board;
     }
 
-    public void updateState() {
+    public void updateState(int x, int y) {
         checkForWinner();
         setNextPlayer();
+        gameManager.sentToSocket(x, y);
     }
 
 
-    public void updateState(int x, int y, String z) {
-        board.getSquare(x,y).pressed(z);
+    public void updateState(PlayerMove playerMove) {
+        board.getSquare(playerMove.getX(), playerMove.getY()).pressed();
         checkForWinner();
         setNextPlayer();
     }
@@ -78,4 +81,5 @@ class Game {
     public Parent getSkin() {
         return skin;
     }
+
 }

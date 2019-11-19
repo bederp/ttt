@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+<!--        <app.env>${app.env}</app.env>-->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
@@ -20,7 +21,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-                    <mainClass>TicTacToe</mainClass>
+                    <mainClass>${app.env}</mainClass>
                 </configuration>
                 <executions>
                     <execution>

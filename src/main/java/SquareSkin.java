@@ -20,7 +20,7 @@ class SquareSkin extends StackPane {
         getChildren().setAll(imageView);
         setPrefSize(crossImage.getHeight() + 20, crossImage.getHeight() + 20);
 
-        setOnMousePressed(mouseEvent -> square.pressed());
+        setOnMousePressed(mouseEvent -> square.pressedFromFx());
     }
 
     void setState(Square.State state) {

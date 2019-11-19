@@ -1,14 +1,16 @@
 import javafx.scene.Node;
 
 class Square {
-    enum State { EMPTY, NOUGHT, CROSS }
-
+    enum State { EMPTY, NOUGHT, CROSS;}
     private final SquareSkin skin;
-
     private State state = State.EMPTY;
-
     private int x;
     private int y;
+
+    void pressedFromFx() {
+        pressed();
+        game.updateState(x, y);
+    }
 
     public State getState() {
         return state;
@@ -30,15 +32,6 @@ class Square {
     }
 
     public void pressed() {
-        if (!game.isGameOver() && state == State.EMPTY) {
-            String toSend = (this.x + " " + this.y + " " + game.getCurrentPlayer());
-            //tu wysylamy toSend
-            setState(game.getCurrentPlayer());
-            game.updateState();
-        }
-    }
-
-    public void pressed(String z) {
         if (!game.isGameOver() && state == State.EMPTY) {
             setState(game.getCurrentPlayer());
         }
